@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class UsuariosController extends Controller
@@ -21,8 +23,17 @@ class UsuariosController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('usuarios');
-    }
+  
+     public function index()
+     {
+         $users = User::all();
+     
+         if (request()->ajax()) {
+             return response()->json($users); // Devolver los usuarios en formato JSON para solicitudes AJAX
+         }
+     
+         return view('usuarios'); // Devolver la vista si no es una solicitud AJAX
+     }
+     
+
 }
