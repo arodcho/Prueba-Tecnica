@@ -21,7 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
+
+    public function proyectos()
+    {
+        return $this->hasMany(Project::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -32,6 +38,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    
 
     /**
      * Get the attributes that should be cast.
@@ -45,4 +53,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    
 }
