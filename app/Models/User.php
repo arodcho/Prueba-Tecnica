@@ -24,10 +24,18 @@ class User extends Authenticatable
         'is_admin',
     ];
 
+    // Relación con el modelo Project (Uno a Muchos)
     public function proyectos()
     {
         return $this->hasMany(Project::class);
     }
+
+    // Relación con el modelo Task (Muchos a Muchos)
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class); 
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -38,8 +46,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    
 
     /**
      * Get the attributes that should be cast.
@@ -53,6 +59,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    
 }

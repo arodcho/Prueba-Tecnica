@@ -8,24 +8,27 @@ use Illuminate\Notifications\Notifiable;
 
 class Project extends Model
 {
-       /** @use HasFactory<\Database\Factories\UserFactory> */
-       use HasFactory, Notifiable;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Notifiable;
 
-       /**
-        * The attributes that are mass assignable.
-        *
-        * @var array<int, string>
-        */
-       protected $fillable = [
-           'name',
-           'user_id',
-        'description',
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'user_id',
 
-       ];
-
-       public function user()
+    ];
+    // Relación con el modelo User (Uno a Uno)
+    public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
-   
+    
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

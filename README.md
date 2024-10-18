@@ -1,66 +1,42 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+PRUEBA TÉCNICA.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Método: Esta prueba técnica se envía para que el candidato la haga en casa con los medios que estime.
+La entrega se hace mediante un enlace a un repositorio público de GitHub* en el que se aloje el
+proyecto.
+El enlace será adjuntado / enviado por correo electrónico en respuesta al mismo en el que se mandan
+estas instrucciones.
+*: ¡ATENCIÓN! Solo se admitirán enlaces a proyectos públicos alojados en GitHub.
+Expectativa: Se espera que el candidato proponga una solución realizada en el framework Laravel con
+PHP 8 o superior y con los estilos basados en Bootstrap 4. Debe usarse la plantilla AdminLTE 3 o
+similares para la base del diseño. (Se debe usar el sistema de plantillas Blade).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Etapa I: Instalación y configuración de un nuevo proyecto de Laravel con el sistema de autenticación
+por defecto de este framework (Inicio de Sesión y Registro) y base de datos MySQL / MariaDB.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Etapa II: Diseño de la interfaz de la aplicación con menú, cabecera y pie de página.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Etapa III: Realización de CRUD de usuarios para gestionar el acceso a la aplicación con campos como
+“Nombre”, “Email”, etc. (Diseño a gusto del usuario, funcionalidad mediante AJAX).
+Se debe incluir un campo seleccionable de “Administrador” que permitirá funciones extra más adelante.
+Insertar acceso desde el menú.
 
-## Learning Laravel
+Etapa IV: Desarrollo de un sistema de control de tareas de proyectos basado en los siguientes puntos
+clave (Insertar también acceso desde el menú):
+1.- Botón de añadir proyecto (No se contempla editar ni eliminar para esta prueba). Solo para
+usuarios “Administradores”.
+a. Se solicitará únicamente el nombre del proyecto mediante una ventana modal.
+2.- Listado de proyectos ordenados por última fecha de uso con nombre del proyecto y usuario que
+lo ha creado, cargado mediante AJAX (Al añadir un nuevo proyecto, la lista se debe recargar
+automáticamente).
+3.- Calendario al que se puedan arrastrar los proyectos para añadir información sobre su desarrollo
+(tarea) en un tramo en concreto para cada usuario de la aplicación. Por defecto el usuario
+seleccionado será en usuario que ha iniciado sesión.
+Una vez guardada la información se deberá cargar mediante AJAX las tareas del usuario
+seleccionado al calendario cada vez que se cambie de usuario o se entre a la página.
+4.- Informe PDF de tareas agrupadas por proyectos con filtro de proyecto, fecha desde, fecha hasta
+y usuario que realizó la tarea. Se debe mostrar el tiempo de cada tarea y el global asignado al
+proyecto según los filtros.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Etapa V: Finalización de la prueba y presentación de la documentación.

@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Prueba Técnica</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -171,12 +171,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
-    'classes_auth_header' => '',
-    'classes_auth_body' => '',
-    'classes_auth_footer' => '',
-    'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+   'classes_auth_card' => 'bg-gradient-dark',
+'classes_auth_header' => '',
+'classes_auth_body' => 'bg-gradient-dark',
+'classes_auth_footer' => 'text-center',
+'classes_auth_icon' => 'fa-fw text-light',
+'classes_auth_btn' => 'btn-flat btn-light',
 
     /*
     |--------------------------------------------------------------------------
@@ -198,7 +198,7 @@ return [
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
     'classes_sidebar_nav' => '',
-    'classes_topnav' => 'navbar-white navbar-light',
+    'classes_topnav' => 'navbar-grey navbar-dark',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
 
@@ -222,7 +222,7 @@ return [
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
-    'sidebar_nav_animation_speed' => 300,
+    'sidebar_nav_animation_speed' => 200,
 
     /*
     |--------------------------------------------------------------------------
@@ -323,21 +323,21 @@ return [
         [
             'text' => 'Inicio',
             'url' => 'home',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa fa-home',
             'label_color' => 'success',
         ],
        
         [
-            'text' => 'Control proyectos',
+            'text' => 'Control Proyectos',
             'url' => 'proyectos',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fa fa-cogs',
             'label_color' => 'success',
         ],
               
         [
             'text' => 'Usuarios',
             'url' => 'usuarios',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'far fa fa-user',
             'label_color' => 'success',
         ],
             
