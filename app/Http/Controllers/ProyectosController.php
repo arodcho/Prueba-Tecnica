@@ -6,58 +6,78 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
 use PDF;
+
 use Illuminate\Support\Facades\Auth;
 
 class ProyectosController extends Controller
+
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    public function index(): \Illuminate\Contracts\Support\Renderable
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
     {
         $projects = Project::all();
 
         if (request()->ajax()) {
-            return response()->json($projects);
+            return response()->json($projects); // Devolver los usuarios en formato JSON para solicitudes AJAX
         }
 
-        return view('proyectos');
+        return view('proyectos'); // Devolver la vista si no es una solicitud AJAX
     }
 
     public function store(Request $request)
     {
+
         Project::create([
             'name' => $request['nombre'],
             'description' => '',
             'user_id' => Auth::user()->id,
-        ]);
 
+
+        ]);
         return redirect()->back()->with('success', 'Proyecto creado correctamente.');
     }
 
     public function informePDF(Request $request)
     {
+        // Obtener los proyectos filtrados
         $proyectos = $this->obtenerProyectosFiltrados($request);
-
+     
+        // Extraer valores del request
         $desde = $request->input('fechadesde');
         $hasta = $request->input('fechahasta');
         $proyecto = $request->input('proyecto');
         $usuario = $request->input('usuario');
-
-        $pdf = PDF::loadView('informe', compact('proyectos', 'desde', 'hasta', 'proyecto', 'usuario'));
-
+    
+        // Cargar la vista para el PDF con los datos
+        $pdf = Pdf::loadView('informe', compact('proyectos', 'desde', 'hasta', 'proyecto', 'usuario'));
+        
         return $pdf->download('informe-proyectos.pdf');
     }
+    
 
     public function obtenerProyectosFiltrados(Request $request)
     {
+        // Obtener los parámetros de la solicitud
         $projectId = $request->input('proyecto');
         $userId = $request->input('usuario');
-        $start = $this->formatDate($request->input('fechadesde'));
-        $end = $this->formatDate($request->input('fechahasta'));
+        $start = $request->input('fechadesde') ? date('Y-m-d H:i:s', strtotime($request->input('fechadesde'))) : null;
+        $end = $request->input('fechahasta') ? date('Y-m-d H:i:s', strtotime($request->input('fechahasta'))) : null;
 
+        // Obtener las tareas basadas en user_id y project_id
         $tasks = Task::query();
 
         if ($userId) {
@@ -67,41 +87,40 @@ class ProyectosController extends Controller
         if ($projectId) {
             $tasks->where('project_id', $projectId);
         }
-
         if ($start) {
-            $tasks->where('start', '>=', $start);
+            $tasks->where('start', '>=', "$start");
         }
 
         if ($end) {
-            $tasks->where('end', '<=', $end);
+            $tasks->where('end', '<=', "$end");
         }
 
         $tasks = $tasks->get();
 
-        return Project::whereIn('id', $tasks->pluck('project_id'))
-            ->with(['tasks' => function ($query) use ($userId, $start, $end) {
-                if ($userId) {
-                    $query->where('user_id', $userId);
-                }
+        // Obtener los proyectos con las tareas filtradas
+        $proyectos = Project::whereIn('id', $tasks->pluck('project_id'))->with(['tasks' => function ($query) use ($userId, $start, $end) {
+            if ($userId) {
+                $query->where('user_id', $userId);
+            }
 
-                if ($start) {
-                    $query->where('start', '>=', $start);
-                }
+            if ($start) {
+           
+                $query->where('start', '>=', "$start");
+            }
 
-                if ($end) {
-                    $query->where('end', '<=', $end);
-                }
-            }])->get();
+            if ($end) {
+              
+                $query->where('end', '<=', "$end");
+            }
+        }])->get();
+
+        return $proyectos;
     }
+    
 
     public function obtenerProyectos()
     {
         $proyectos = Project::all();
         return response()->json($proyectos);
-    }
-
-    private function formatDate(?string $date): ?string
-    {
-        return $date ? date('Y-m-d H:i:s', strtotime($date)) : null;
     }
 }
