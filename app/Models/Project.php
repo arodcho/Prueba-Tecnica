@@ -27,6 +27,7 @@ class Project extends Model
         return $this->hasOne(User::class);
     }
     
+    // Relación con el modelo Task (Uno a Muchos)
     public function tasks()
     {
         return $this->hasMany(Task::class); 

@@ -20,7 +20,7 @@ class Task extends Model
         'project_id',
     ];
 
-        
+        // Relación con el modelo Project (Uno a Muchos)
     public function project()
     {
         return $this->belongsTo(Project::class); 

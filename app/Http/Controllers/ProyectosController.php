@@ -38,6 +38,7 @@ class ProyectosController extends Controller
         return view('proyectos'); // Devolver la vista si no es una solicitud AJAX
     }
 
+    // Crear un nuevo proyecto
     public function store(Request $request)
     {
 
@@ -117,7 +118,7 @@ class ProyectosController extends Controller
         return $proyectos;
     }
 
-
+    // Obtener todos los proyectos
     public function obtenerProyectos()
     {
         $proyectos = Project::all();
