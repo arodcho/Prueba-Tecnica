@@ -11,14 +11,27 @@ class TaskFactory extends Factory
 {
     protected $model = Task::class;
 
-    public function definition()
+     public function definition()
     {
+        // Generar una fecha aleatoria dentro de una semana a partir de ahora
+        $date = $this->faker->dateTimeBetween('now', '+1 week');
+        
+        // Mantener la fecha, pero cambiar la hora aleatoriamente
+        $startHour = $this->faker->numberBetween(0, 23); // Hora de inicio aleatoria
+        $endHour = $this->faker->numberBetween($startHour + 1, 23); // Hora de fin aleatoria después de la hora de inicio
+
         return [
-            'start' => $this->faker->dateTimeBetween('now', '+1 week'),
-            'end' => $this->faker->dateTimeBetween('+1 week', '+2 weeks'),
-            'task_description' => $this->faker->sentence(5),
-            'project_id' => Project::factory(),
-            'user_id' => User::factory(), // Asociar la tarea a un proyecto
+            'task_description' => $this->faker->sentence(),
+            'start' => $this->modifyDateTime($date, $startHour), // Ajustar la hora de inicio
+            'end' => $this->modifyDateTime($date, $endHour), // Ajustar la hora de fin
+            'project_id' => $this->faker->randomElement(\App\Models\Project::pluck('id')->toArray()),
+            'user_id' => $this->faker->randomElement(\App\Models\User::pluck('id')->toArray()),
         ];
+    }
+
+    // Función para modificar la hora de un DateTime
+    private function modifyDateTime($date, $hour)
+    {
+        return (clone $date)->setTime($hour, 0); // Cambia los minutos a 0
     }
 }

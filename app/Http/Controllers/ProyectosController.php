@@ -55,19 +55,19 @@ class ProyectosController extends Controller
     {
         // Obtener los proyectos filtrados
         $proyectos = $this->obtenerProyectosFiltrados($request);
-     
+
         // Extraer valores del request
         $desde = $request->input('fechadesde');
         $hasta = $request->input('fechahasta');
         $proyecto = $request->input('proyecto');
         $usuario = $request->input('usuario');
-    
+
         // Cargar la vista para el PDF con los datos
         $pdf = Pdf::loadView('informe', compact('proyectos', 'desde', 'hasta', 'proyecto', 'usuario'));
-        
+
         return $pdf->download('informe-proyectos.pdf');
     }
-    
+
 
     public function obtenerProyectosFiltrados(Request $request)
     {
@@ -104,19 +104,19 @@ class ProyectosController extends Controller
             }
 
             if ($start) {
-           
+
                 $query->where('start', '>=', "$start");
             }
 
             if ($end) {
-              
+
                 $query->where('end', '<=', "$end");
             }
         }])->get();
 
         return $proyectos;
     }
-    
+
 
     public function obtenerProyectos()
     {

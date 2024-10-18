@@ -6,6 +6,12 @@
 <!-- HEADER -->
 @section('content_header')
     <h1>Control de Proyectos</h1>
+
+    <!-- SweetAlert -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 @stop
 
 <!-- CONTENT -->
@@ -16,14 +22,22 @@
                 <h3 class="mb-0">Listado</h3>
                 <div class="btn-group">
                     {{-- Botón para crear proyecto --}}
-                    <button type="button" class="btn p-2 m-2 rounded" style="background-color: #001c56; color: white; width: 50px; height: 50px;"
-                        data-toggle="modal" data-target="#crearProyectoModal"
+                    <button type="button" class="btn p-2 m-2 rounded"
+                        style="background-color: #001c56; color: white; width: 50px; height: 50px;" data-toggle="modal"
+                        data-target="#crearProyectoModal"
                         @if (!Auth::user()->is_admin) disabled title="Solo los administradores pueden crear proyectos." @endif>
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
 
-                    <button type="button" class="btn p-2 m-2 rounded" style="background-color: #001c56; color: white; width: 50px; height: 50px;"
-                        data-toggle="modal" data-target="#generarInformeModal">
+                    <button type="button" class="btn p-2 m-2 rounded"
+                        style="background-color: #001c56; color: white; width: 50px; height: 50px;" data-toggle="modal"
+                        data-target="#generarInformeModal">
+                        <i class="fa fa-file" aria-hidden="true"></i>
+                    </button>
+
+                    <button type="button" class="btn p-2 m-2 rounded" id="buttonEvent"
+                        style="background-color: #001c56; color: white; width: 50px; height: 50px; display: none;" data-toggle="modal"
+                        data-target="#eventModal">
                         <i class="fa fa-file" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -109,27 +123,58 @@
         </div>
     </div>
 
-    <!-- Modal Detalles de la Tarea -->
-    <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Modal Generar Informe -->
+    <div class="modal fade" id="eventModal" class="eventModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalLabel">Detalles de la Tarea</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Evento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                    <p id="taskDescription"></p>
-                    <p>Inicio: <span id="taskStart"></span></p>
-                    <p>Fin: <span id="taskEnd"></span></p>
+                    <form action="creartarea" method="POST">
+                        @csrf
+                        <div>
+                            <div>
+                                <label for="fechadesde" class="form-label">Inicio Tarea</label>
+                                <input type="datetime-local" name="fechainicio" class="form-control" value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
+                            </div>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="proyecto" class="form-label">Texto informativo</label>
+                            <textarea name="descripcion" class="form-control" style="height: 125px;resize: none;" maxlength="125"></textarea>
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Fin tarea</label>
+                            <input type="datetime-local" name="fechafin" class="form-control" value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
+
+                        </div>
+                        <input type="hidden" id="projectId" name="proyecto_id" class="form-control">
+                        <input type="hidden" name="usuario_id" class="form-control" value="{{ Auth::user()->id }}">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="saveTask">Guardar Tarea</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
 
+    @if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: '{{ session('success') }}',
+        });
+    </script>
+@endif
 @stop
 
 <!-- FOOTER -->
@@ -154,6 +199,7 @@
 
 <!-- CSS -->
 @section('css')
+
     <style>
         .fc .fc-toolbar-title {
             font-size: 1rem;
@@ -165,15 +211,18 @@
 
 <!-- JS -->
 @section('js')
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@6.1.15/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.15/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.15/index.global.min.js'></script>
 
     <script>
         $(document).ready(function() {
+            // Cargar proyectos
             $.ajax({
                 url: "{{ route('proyectos') }}",
                 method: "GET",
@@ -185,50 +234,53 @@
                     if (data.length === 0) {
                         container.append(`<p class="text-center">No hay proyectos creados.</p>`);
                     } else {
+                        // Ordenar por fecha de creación
                         data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
                         data.forEach(function(project) {
                             let card = `
-                                <div class="card project-card" data-id="${project.id}" draggable="true">
-                                    <div class="card-body p-3 rounded d-flex justify-content-between bg-yellow">
-                                        <div>
-                                            <h5 class="card-title font-bold mb-2">${project.name}</h5>
-                                            <p class="card-text text-muted">Creado por usuario ID: ${project.user_id}</p>
-                                        </div>
-                                        <div class="d-flex align-items-end" style="margin-left: auto;"> <!-- Agregar margen automático -->
-                                            <small class="text-muted">${new Date(project.created_at).toLocaleDateString()}</small>
-                                        </div>
-                                    </div>
+                        <div class="card project-card fc-event" data-id="${project.id}" 
+                             data-event='{ "title": "${project.name}", "id": "${project.id}" }'>
+                            <div class="card-body p-3 rounded d-flex justify-content-between bg-yellow">
+                                <div>
+                                    <h5 class="card-title font-bold mb-2">${project.name}</h5>
+                                    <p class="card-text text-muted">Creado por usuario ID: ${project.user_id}</p>
                                 </div>
-                            `;
+                                <div class="d-flex align-items-end" style="margin-left: auto;">
+                                    <small class="text-muted">${new Date(project.created_at).toLocaleDateString()}</small>
+                                </div>
+                            </div>
+                        </div>`;
                             container.append(card);
-
                         });
 
-                        $('.project-card').each(function() {
-                            $(this).data('event', {
-                                title: $(this).find('.card-title').text(),
-                                id: $(this).data('id'),
-                                create: true,
-                                stick: true
-                            });
+                        // Hacer las tarjetas arrastrables
+                        $('.project-card').draggable({
+                            zIndex: 999,
+                            revert: 'invalid', // Vuelve a su lugar si no se suelta en el calendario
+                            stop: function(event, ui) {
+                                // Mostrar modal para agregar evento
+                                const projectData = JSON.parse($(this).attr('data-event'));
+                                $('#eventTitle').val(projectData
+                                    .title); // Pre-llenar el título del evento
+                                $('#projectId').val(projectData
+                                    .id); // Guardar el ID del proyecto
+                                // $('#eventModal').modal('show'); // Mostrar el modal
+                                $('#buttonEvent').click();
+                            }
 
-                            $(this).draggable({
-                                zIndex: 999,
-                                revert: true,
-                                revertDuration: 0
-                            });
                         });
                     }
                 },
+
                 error: function() {
                     alert('Hubo un error al recuperar los datos.');
                 }
             });
 
+            // Inicializar el calendario
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'timeGridDay',
                 headerToolbar: {
                     left: 'prev,next,today',
                     center: 'title',
@@ -239,32 +291,38 @@
                     timeGridWeek: "Semana",
                     timeGridDay: "Día",
                 },
-                locale: 'es',
-                slotDuration: '00:30:00',
-                slotLabelInterval: {
-                    minutes: 30
-                },
                 slotLabelFormat: {
                     hour: 'numeric',
                     minute: '2-digit',
                     omitZeroMinute: false,
                     meridiem: 'short'
                 },
+                slotLabelInterval: {
+                    minutes: 30
+                },
+                initialView: 'timeGridDay',
+                locale: 'es',
                 scrollTime: '08:00:00',
                 allDaySlot: false,
                 editable: true,
-                droppable: true,
+                selectable: true,
+                droppable: true, // Permitir soltar eventos en el calendario
+                nowIndicator: true,
+                now: new Date(), // Hora y fecha actuales
+                events: '/tareas', // Ruta para cargar eventos
+                // Evento al soltar un proyecto
                 drop: function(info) {
-                    if (info.draggedEl.dataset.create) {
-                        $('#crearProyectoModal').modal('show');
-                    }
+                    console.log('Dropeado');
+
                 }
             });
 
             calendar.render();
-        });
 
-        $(document).ready(function() {
+
+            // AJAX para cargar los eventos
+
+            // Cargar proyectos en el modal de informe
             $.ajax({
                 url: "{{ route('api.proyectos') }}",
                 method: "GET",
@@ -280,6 +338,7 @@
                 }
             });
 
+            // Cargar usuarios en el modal de informe
             $.ajax({
                 url: "{{ route('api.usuarios') }}",
                 method: "GET",

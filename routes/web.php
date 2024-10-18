@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProyectosController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\TareasController;
+
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -24,3 +28,8 @@ Route::post('/update-user-role', [App\Http\Controllers\UsuariosController::class
 Route::post('usuarios/crear', [App\Http\Controllers\UsuariosController::class, 'crearUsuario'])->name('crearUsuario');
 Route::delete('usuarios/{id}/eliminar', [App\Http\Controllers\UsuariosController::class, 'eliminarUsuario'])->name('eliminarUsuario');
 Route::post('usuarios/{id}/actualizar', [App\Http\Controllers\UsuariosController::class, 'actualizarUsuario'])->name('actualizarUsuario');
+
+// Ruta para cargar tareas 
+Route::get('/tareas', [App\Http\Controllers\TareasController::class, 'obtenerTareas'])->name('obtenerTareas');
+Route::post('creartarea', [App\Http\Controllers\TareasController::class, 'crearTarea'])->name('crearTarea');
+

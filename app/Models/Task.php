@@ -20,10 +20,10 @@ class Task extends Model
         'project_id',
     ];
 
-    // Relación con el modelo Project (Uno a Uno)
+        
     public function project()
     {
-        return $this->hasOne(Project::class);
+        return $this->belongsTo(Project::class); 
     }
 
     // Relación con el modelo User (Uno a Uno)
