@@ -54,9 +54,9 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color: #001c56; color: white;">
                     <h5 class="modal-title" id="exampleModalLongTitle">Crear proyecto</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -68,9 +68,14 @@
                             <input type="text" name="nombre" class="form-control" required>
                         </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Crear proyecto</button>
+                <div class="modal-footer">    
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-check" aria-hidden="true"></i> Crear proyecto
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cerrar
+                    </button>
+                
                 </div>
                 </form>
             </div>
@@ -82,9 +87,9 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color: #001c56; color: white;">
                     <h5 class="modal-title" id="exampleModalLongTitle">Opciones del informe</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -114,9 +119,14 @@
                             </select>
                         </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Generar informe</button>
+                <div class="modal-footer">  
+                     <button type="submit" class="btn btn-success">
+                        <i class="fa fa-file-pdf" aria-hidden="true"></i> Generar informe
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cerrar
+                    </button>
+                 
                 </div>
                 </form>
             </div>
@@ -128,9 +138,9 @@
         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color: #001c56; color: white;">
                     <h5 class="modal-title" id="exampleModalLongTitle">Evento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -145,12 +155,12 @@
                             
                         </div>
                         <div class="mb-3">
-                            <label for="proyecto" class="form-label">Texto informativo</label>
-                            <textarea name="descripcion" class="form-control" style="height: 125px;resize: none;" maxlength="125"></textarea>
+                            <label for="proyecto" class="form-label mt-2">Texto informativo</label>
+                            <textarea name="descripcion" class="form-control" style="height: 125px;resize: none;" maxlength="125" required></textarea>
 
                         </div>
                         <div class="mb-3">
-                            <label for="usuario" class="form-label">Fin tarea</label>
+                            <label for="usuario" class="form-label mt-2">Fin tarea</label>
                             <input type="datetime-local" name="fechafin" class="form-control" value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
 
                         </div>
@@ -158,8 +168,12 @@
                         <input type="hidden" name="usuario_id" class="form-control" value="{{ Auth::user()->id }}">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-save" aria-hidden="true"></i> Guardar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        <i class="fa fa-times" aria-hidden="true"></i> Cerrar
+                    </button>
                 </div>
                 </form>
             </div>
