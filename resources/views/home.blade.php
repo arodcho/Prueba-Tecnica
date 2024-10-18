@@ -33,57 +33,57 @@
     <div class="row">
         <div class="col-lg-4 col-12">
             <div class="card bg-secondary text-white">
-            <div class="card-header d-flex align-items-center">
-                <i class="fas fa-users fa-2x mr-2"></i>
-                <h3 class="card-title mb-0">Total de Usuarios</h3>
-            </div>
-            <div class="card-body d-flex align-items-center">
-                <div class="mr-3">
-                <i class="fas fa-user fa-3x"></i>
+                <div class="card-header d-flex align-items-center">
+                    <i class="fas fa-users fa-2x mr-2"></i>
+                    <h3 class="card-title mb-0">Total de Usuarios</h3>
                 </div>
-                <div>
-                <p class="mb-0">Número total de usuarios:</p>
-                <h4 id="totalUsuarios" class="mb-0"></h4>
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-user fa-3x"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0">Número total de usuarios:</p>
+                        <h4 id="totalUsuarios" class="mb-0"></h4>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <div class="col-lg-4 col-12">
             <div class="card bg-warning text-dark">
-            <div class="card-header d-flex align-items-center">
-                <i class="fas fa-project-diagram fa-2x mr-2"></i>
-                <h3 class="card-title mb-0">Total de Proyectos</h3>
-            </div>
-            <div class="card-body d-flex align-items-center">
-                <div class="mr-3">
-                <i class="fas fa-tasks fa-3x"></i>
+                <div class="card-header d-flex align-items-center">
+                    <i class="fas fa-project-diagram fa-2x mr-2"></i>
+                    <h3 class="card-title mb-0">Total de Proyectos</h3>
                 </div>
-                <div>
-                <p class="mb-0">Número total de proyectos:</p>
-                <h4 id="totalProyectos" class="mb-0"></h4>
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-tasks fa-3x"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0">Número total de proyectos:</p>
+                        <h4 id="totalProyectos" class="mb-0"></h4>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <div class="col-lg-4 col-12">
             <div class="card bg-info text-white">
-            <div class="card-header d-flex align-items-center">
-                <i class="fas fa-tasks fa-2x mr-2"></i>
-                <h3 class="card-title mb-0">Total de Tareas Realizadas</h3>
-            </div>
-            <div class="card-body d-flex align-items-center">
-                <div class="mr-3">
-                <i class="fas fa-check fa-3x"></i>
+                <div class="card-header d-flex align-items-center">
+                    <i class="fas fa-tasks fa-2x mr-2"></i>
+                    <h3 class="card-title mb-0">Total de Tareas Realizadas</h3>
                 </div>
-                <div>
-                <p class="mb-0">Número total de tareas realizadas:</p>
-                <h4 id="totalTareas" class="mb-0"></h4>
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fas fa-check fa-3x"></i>
+                    </div>
+                    <div>
+                        <p class="mb-0">Número total de tareas realizadas:</p>
+                        <h4 id="totalTareas" class="mb-0"></h4>
+                    </div>
                 </div>
             </div>
-            </div>
-        </div>
         </div>
     </div>
+
 
     <div class="card">
         <div class="card-header">
@@ -133,20 +133,22 @@
             </a>
         </div>
     </div>
-    
+
 @stop
+
 
 <!-- FOOTER -->
 @section('footer')
-    <footer class="w-100 bg-light text-black pt-4 mt-6 pb-3 border-top"
+    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top"
         style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030; margin-left: 16rem;">
         <div class="container">
             <div class="row text-center">
-                <div class="col-sm-4 mb-2 mb-sm-0">
-                    <strong>&copy; 2024 Prueba Técnica.</strong>
-                </div>
+
                 <div class="col-sm-4">
                     <div>Versión 1.0.0.</div>
+                </div>
+                <div class="col-sm-4 mb-2 mb-sm-0">
+                    <strong>&copy; 2024 Prueba Técnica.</strong>
                 </div>
                 <div class="col-sm-4 mb-2 mb-sm-0">
                     <div>Desarrollado por <b>Álvaro Rodríguez Chofles.</b></div>
@@ -208,7 +210,7 @@
                     success: function(data) {
                         // Actualiza el total de tareas realizadas
                         $('#totalTareas').text(data.length);
-                    
+
                     },
                     error: function() {
                         // Muestra una alerta si la solicitud falla
