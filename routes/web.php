@@ -32,4 +32,5 @@ Route::post('usuarios/{id}/actualizar', [App\Http\Controllers\UsuariosController
 // Ruta para cargar tareas 
 Route::get('/tareas', [App\Http\Controllers\TareasController::class, 'obtenerTareas'])->name('obtenerTareas');
 Route::post('creartarea', [App\Http\Controllers\TareasController::class, 'crearTarea'])->name('crearTarea');
+Route::get('/api/tareas', [App\Http\Controllers\TareasController::class, 'getTotalTareasRealizadas'])->name('api.tareas');
 

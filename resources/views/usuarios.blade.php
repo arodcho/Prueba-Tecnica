@@ -71,7 +71,10 @@
                                 <option value="1">Administrador</option>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Crear</button>
+                        <div class="text-center mt-2">
+                            <button type="submit" class="btn btn-primary p-2">Crear</button>
+                           
+                        </div>
                     </form>
                 </div>
             </div>
@@ -100,7 +103,10 @@
                             <label for="editUserEmail">Email</label>
                             <input type="email" class="form-control" id="editUserEmail" name="email" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <div class="text-center mt-2">
+                            <button type="submit" class="btn btn-primary p-2">Actualizar</button>
+                           
+                        </div>
                     </form>
                 </div>
             </div>

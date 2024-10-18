@@ -7,7 +7,7 @@ use App\Models\Task;
 
 class TareasController extends Controller
 {
-        /**
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -20,26 +20,26 @@ class TareasController extends Controller
     public function obtenerTareas()
     {
         $tareas = Task::with('project') // Eager loading para obtener el proyecto relacionado
-    ->select("id", "task_description", "project_id", "start", "end")
-    ->get();
+            ->select("id", "task_description", "project_id", "start", "end")
+            ->get();
 
-$datos = array();
+        $datos = array();
 
-foreach ($tareas as $t) {
-    $datos[] = array(
-        "id" => $t["id"],
-        "title" => $t->project ? $t->project->name : 'Sin Proyecto', // Obtener el nombre del proyecto
-        "start" => $t["start"],
-        "end" => $t["end"],
-        "description" => $t["task_description"]
-    );
-}
+        foreach ($tareas as $t) {
+            $datos[] = array(
+                "id" => $t["id"],
+                "title" => $t->project ? $t->project->name : 'Sin Proyecto', // Obtener el nombre del proyecto
+                "start" => $t["start"],
+                "end" => $t["end"],
+                "description" => $t["task_description"]
+            );
+        }
 
-    return response()->json($datos);
+        return response()->json($datos);
     }
 
     // Crear una nueva tarea
-    public function crearTarea( Request $request )
+    public function crearTarea(Request $request)
     {
         $request->validate([
             'descripcion' => 'required',
@@ -59,5 +59,10 @@ foreach ($tareas as $t) {
         return redirect()->route('proyectos')->with('success', 'Tarea creada correctamente');
     }
 
-
+    // En tu controlador (por ejemplo, TaskController)
+    public function getTotalTareasRealizadas()
+    {
+        $tareas = Task::all();
+        return response()->json($tareas);
+    }
 }
