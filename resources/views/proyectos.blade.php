@@ -36,8 +36,8 @@
                     </button>
 
                     <button type="button" class="btn p-2 m-2 rounded" id="buttonEvent"
-                        style="background-color: #001c56; color: white; width: 50px; height: 50px; display: none;" data-toggle="modal"
-                        data-target="#eventModal">
+                        style="background-color: #001c56; color: white; width: 50px; height: 50px; display: none;"
+                        data-toggle="modal" data-target="#eventModal">
                         <i class="fa fa-file" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -68,14 +68,14 @@
                             <input type="text" name="nombre" class="form-control" required>
                         </div>
                 </div>
-                <div class="modal-footer">    
+                <div class="modal-footer">
                     <button type="submit" class="btn btn-success">
                         <i class="fa fa-check" aria-hidden="true"></i> Crear proyecto
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">
                         <i class="fa fa-times" aria-hidden="true"></i> Cerrar
                     </button>
-                
+
                 </div>
                 </form>
             </div>
@@ -119,14 +119,14 @@
                             </select>
                         </div>
                 </div>
-                <div class="modal-footer">  
-                     <button type="submit" class="btn btn-success">
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
                         <i class="fa fa-file-pdf" aria-hidden="true"></i> Generar informe
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">
                         <i class="fa fa-times" aria-hidden="true"></i> Cerrar
                     </button>
-                 
+
                 </div>
                 </form>
             </div>
@@ -140,7 +140,8 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #001c56; color: white;">
                     <h5 class="modal-title" id="exampleModalLongTitle">Evento</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        style="color: white;">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -150,9 +151,10 @@
                         <div>
                             <div>
                                 <label for="fechadesde" class="form-label">Inicio Tarea</label>
-                                <input type="datetime-local" name="fechainicio" class="form-control" value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
+                                <input type="datetime-local" name="fechainicio" class="form-control"
+                                    value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
                             </div>
-                            
+
                         </div>
                         <div class="mb-3">
                             <label for="proyecto" class="form-label mt-2">Texto informativo</label>
@@ -161,7 +163,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="usuario" class="form-label mt-2">Fin tarea</label>
-                            <input type="datetime-local" name="fechafin" class="form-control" value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
+                            <input type="datetime-local" name="fechafin" class="form-control"
+                                value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
 
                         </div>
                         <input type="hidden" id="projectId" name="proyecto_id" class="form-control">
@@ -181,14 +184,14 @@
     </div>
 
     @if (session('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Éxito',
-            text: '{{ session('success') }}',
-        });
-    </script>
-@endif
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
 @stop
 
 <!-- FOOTER -->
@@ -221,9 +224,10 @@
             font-weight: normal;
             padding: 0.25rem;
         }
+
         footer {
-    margin-top: 6rem;
-}
+            margin-top: 6rem;
+        }
     </style>
 @stop
 
@@ -319,6 +323,12 @@
                 slotLabelInterval: {
                     minutes: 30
                 },
+                customButtons: {
+                    userSelect: {
+                        text: ' ', // Necesario para mostrar espacio
+                        click: function() {} // No necesita acción
+                    }
+                },
                 initialView: 'timeGridDay',
                 locale: 'es',
                 scrollTime: '08:00:00',
@@ -328,21 +338,52 @@
                 droppable: true, // Permitir soltar eventos en el calendario
                 nowIndicator: true,
                 now: new Date(), // Hora y fecha actuales
-                events: '/tareas', // Ruta para cargar eventos
+                events: function(fetchInfo, successCallback, failureCallback) {
+                    let userId = $('#usuario').val();
+                    let url = userId ? '/tareas/' + userId :
+                    '/tareas'; // Ruta para cargar eventos con o sin ID del proyecto
+                    $.ajax({
+                        url: url,
+                        method: 'GET',
+                        success: function(data) {
+                            successCallback(data);
+                        },
+                        error: function() {
+                            failureCallback();
+                        }
+                    });
+                },
                 // Evento al soltar un proyecto
-                drop: function(info) {
-                    console.log('Dropeado');
-
-                }
+                // drop: function(info) {
+                //     console.log('Dropeado');
+                // }
             });
 
             calendar.render();
 
+            // Crear el selector de usuario
+            const userSelect = document.createElement('select');
+            userSelect.id = 'usuario';
+            userSelect.classList.add('form-control', 'mb-3'); // Añadir clase para espaciado
+            userSelect.style.width = '200px'; // Ajustar el ancho del select
+            userSelect.innerHTML = `
+        <option value="">Seleccione un usuario</option>
+    `;
+            // Evento para recargar tareas al cambiar de usuario
+            userSelect.addEventListener('change', function() {
+                calendar.refetchEvents(); // Recargar eventos según el usuario seleccionado
+            });
+
+            // Agregar el selector de usuario al calendario
+            const toolbarLeft = document.querySelector('.fc-toolbar-chunk:first-child');
+            toolbarLeft.prepend(userSelect);
+
+
             // Añadir ícono de calendario al botón del mes
-                const monthButton = document.querySelector('.fc-dayGridMonth-button');
-                if (monthButton) {
-                    monthButton.innerHTML = '<i class="fas fa-calendar"></i>';
-                }
+            const monthButton = document.querySelector('.fc-dayGridMonth-button');
+            if (monthButton) {
+                monthButton.innerHTML = '<i class="fas fa-calendar"></i>';
+            }
 
 
             // AJAX para cargar los eventos

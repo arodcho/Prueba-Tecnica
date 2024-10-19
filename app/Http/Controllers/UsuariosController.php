@@ -52,6 +52,7 @@ class UsuariosController extends Controller
      */
     public function updateRole(Request $request)
     {
+        // dd($request);
         $request->validate([
             'user_id' => 'required|integer',
             'is_admin' => 'required|boolean',
@@ -76,6 +77,7 @@ class UsuariosController extends Controller
      */
     public function crearUsuario(Request $request)
     {
+        // dd($request);
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',
@@ -100,6 +102,7 @@ class UsuariosController extends Controller
      */
     public function eliminarUsuario($id)
     {
+        // dd($request);
         $user = User::find($id);
         if ($user) {
             $user->delete();
@@ -117,6 +120,7 @@ class UsuariosController extends Controller
      */
     public function actualizarUsuario(Request $request, $id)
     {
+        // dd($request);
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|email',

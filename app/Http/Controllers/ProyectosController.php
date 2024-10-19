@@ -29,6 +29,7 @@ class ProyectosController extends Controller
      */
     public function index()
     {
+        // Obtener todos los proyectos
         $projects = Project::all();
 
         if (request()->ajax()) {
@@ -41,7 +42,10 @@ class ProyectosController extends Controller
     // Crear un nuevo proyecto
     public function store(Request $request)
     {
-
+        // dd($request);
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+        ]);
         Project::create([
             'name' => $request['nombre'],
             'description' => '',
@@ -54,6 +58,7 @@ class ProyectosController extends Controller
 
     public function informePDF(Request $request)
     {
+         // dd($request);
         // Obtener los proyectos filtrados
         $proyectos = $this->obtenerProyectosFiltrados($request);
 
@@ -69,16 +74,17 @@ class ProyectosController extends Controller
         return $pdf->download('informe-proyectos.pdf');
     }
 
-
+    // Obtener todos proyectos filtrados por el usuario
     public function obtenerProyectosFiltrados(Request $request)
     {
+        // dd($request);
         // Obtener los parámetros de la solicitud
         $projectId = $request->input('proyecto');
         $userId = $request->input('usuario');
         $start = $request->input('fechadesde') ? date('Y-m-d H:i:s', strtotime($request->input('fechadesde'))) : null;
         $end = $request->input('fechahasta') ? date('Y-m-d H:i:s', strtotime($request->input('fechahasta'))) : null;
 
-        // Obtener las tareas basadas en user_id y project_id
+        // Obtener las tareas filtrando por los siguientes parámetros
         $tasks = Task::query();
 
         if ($userId) {

@@ -35,7 +35,7 @@
             <div class="card bg-secondary text-white">
                 <div class="card-header d-flex align-items-center">
                     <i class="fas fa-users fa-2x mr-2"></i>
-                    <h3 class="card-title mb-0">Total de Usuarios</h3>
+                    <h3 class="card-title mb-0">Total Usuarios</h3>
                 </div>
                 <div class="card-body d-flex align-items-center">
                     <div class="mr-3">
@@ -52,7 +52,7 @@
             <div class="card bg-warning text-dark">
                 <div class="card-header d-flex align-items-center">
                     <i class="fas fa-project-diagram fa-2x mr-2"></i>
-                    <h3 class="card-title mb-0">Total de Proyectos</h3>
+                    <h3 class="card-title mb-0">Total Proyectos</h3>
                 </div>
                 <div class="card-body d-flex align-items-center">
                     <div class="mr-3">
@@ -69,7 +69,7 @@
             <div class="card bg-info text-white">
                 <div class="card-header d-flex align-items-center">
                     <i class="fas fa-tasks fa-2x mr-2"></i>
-                    <h3 class="card-title mb-0">Total de Tareas Realizadas</h3>
+                    <h3 class="card-title mb-0">Total Tareas Realizadas</h3>
                 </div>
                 <div class="card-body d-flex align-items-center">
                     <div class="mr-3">

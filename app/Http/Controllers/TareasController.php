@@ -17,6 +17,7 @@ class TareasController extends Controller
         $this->middleware('auth');
     }
 
+    // Obtener todas las tareas para sacarlas por el calendario
     public function obtenerTareas()
     {
         $tareas = Task::with('project') // Eager loading para obtener el proyecto relacionado
@@ -38,9 +39,34 @@ class TareasController extends Controller
         return response()->json($datos);
     }
 
+    // Obtener las tareas de un usuario para el calendario 
+    public function obtenerTareasId($id)
+    {
+       // dd($id);
+      $tareas = Task::with('project') // Eager loading para obtener el proyecto relacionado
+            ->select("id", "task_description", "project_id", "start", "end")
+            ->where('user_id', $id)
+            ->get();
+
+        $datos = array();
+
+        foreach ($tareas as $t) {
+            $datos[] = array(
+                "id" => $t["id"],
+                "title" => $t->project ? $t->project->name : 'Sin Proyecto', // Obtener el nombre del proyecto
+                "start" => $t["start"],
+                "end" => $t["end"],
+                "description" => $t["task_description"]
+            );
+        }
+
+        return response()->json($datos);
+    }
+
     // Crear una nueva tarea
     public function crearTarea(Request $request)
     {
+         // dd($request);
         $request->validate([
             'descripcion' => 'required',
             'proyecto_id' => 'required',
@@ -59,10 +85,12 @@ class TareasController extends Controller
         return redirect()->route('proyectos')->with('success', 'Tarea creada correctamente');
     }
 
-    // En tu controlador (por ejemplo, TaskController)
-    public function getTotalTareasRealizadas()
+    // Obtener todas las tareas
+    public function obtenerTotalTareasRealizadas()
     {
         $tareas = Task::all();
         return response()->json($tareas);
     }
+
+   
 }
