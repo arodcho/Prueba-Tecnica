@@ -211,12 +211,12 @@
                         <option value="1" ${user.is_admin ? 'selected' : ''}>Administrador</option>
                     </select>
                 `;
-
+ 
                             // Botones de editar y eliminar
                             let editButton =
-                                `<button class="btn btn-warning btn-sm edit-user" data-id="${user.id}" data-name="${user.name}" data-email="${user.email}" ${isAdmin ? '' : 'disabled'}><i class="fa fa-paint-brush" aria-hidden="true"></i></button>`;
+                                `<button class="btn btn-warning btn-sm edit-user"   title="Solo los administradores pueden editar usuarios." data-id="${user.id}" data-name="${user.name}" data-email="${user.email}" ${isAdmin ? '' : 'disabled'}><i class="fa fa-paint-brush" aria-hidden="true"></i></button>`;
                             let deleteButton =
-                                `<button class="btn btn-danger btn-sm delete-user" data-id="${user.id}" ${isAdmin ? '' : 'disabled'}><i class="fa fa-trash" aria-hidden="true"></i></button>`;
+                                `<button class="btn btn-danger btn-sm delete-user"  title="Solo los administradores pueden eliminar usuarios." data-id="${user.id}" ${isAdmin ? '' : 'disabled'}><i class="fa fa-trash" aria-hidden="true"></i></button>`;
 
                             // Fila de la tabla
                             let row = `
