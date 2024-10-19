@@ -22,15 +22,15 @@ class TaskFactory extends Factory
 
         return [
             'task_description' => $this->faker->sentence(),
-            'start' => $this->modifyDateTime($date, $startHour), // Ajustar la hora de inicio
-            'end' => $this->modifyDateTime($date, $endHour), // Ajustar la hora de fin
+            'start' => $this->modificarDateTime($date, $startHour), // Ajustar la hora de inicio
+            'end' => $this->modificarDateTime($date, $endHour), // Ajustar la hora de fin
             'project_id' => $this->faker->randomElement(\App\Models\Project::pluck('id')->toArray()),
             'user_id' => $this->faker->randomElement(\App\Models\User::pluck('id')->toArray()),
         ];
     }
 
     // Función para modificar la hora de un DateTime
-    private function modifyDateTime($date, $hour)
+    private function modificarDateTime($date, $hour)
     {
         return (clone $date)->setTime($hour, 0); // Cambia los minutos a 0
     }

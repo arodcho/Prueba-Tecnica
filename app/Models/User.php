@@ -24,17 +24,35 @@ class User extends Authenticatable
         'is_admin',
     ];
 
-    // Relación con el modelo Project (Uno a Muchos)
+   /**
+     * Relación con el modelo Project (Uno a Muchos).
+     *
+     * Esta relación indica que cada instancia de este modelo puede estar
+     * asociada a múltiples proyectos en la base de datos. Por lo tanto, se
+     * puede acceder a todos los proyectos relacionados a través de esta
+     * relación.
+     *
+     */
     public function proyectos()
     {
         return $this->hasMany(Project::class);
     }
-    // Relación con el modelo Task (Muchos a Muchos)
+
+    /**
+     * Relación con el modelo Task (Muchos a Muchos).
+     *
+     * Esta relación indica que cada instancia de este modelo puede estar
+     * asociada a múltiples tareas en la base de datos, y que cada tarea
+     * puede estar asociada a múltiples instancias de este modelo. Esto permite
+     * acceder a todas las tareas relacionadas a través de esta relación.
+     *
+     */
     public function tasks()
     {
         return $this->hasMany(Task::class);
     }
-    
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

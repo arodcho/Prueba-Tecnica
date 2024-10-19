@@ -46,6 +46,7 @@
         @endif
     </div>
 
+
     <!-- Modal para crear usuario -->
     <div class="modal fade" id="createUserModal" tabindex="-1" role="dialog" aria-labelledby="createUserModalLabel"
         aria-hidden="true">
@@ -120,6 +121,8 @@
         </div>
     </div>
 
+
+    {{-- Tabla de usuarios --}}
     <div class="table-responsive">
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -137,8 +140,8 @@
             </tbody>
         </table>
     </div>
-
 @stop
+
 
 <!-- FOOTER -->
 @section('footer')
@@ -161,7 +164,6 @@
 @stop
 
 
-
 <!-- CSS -->
 @section('css')
     <style>
@@ -177,6 +179,7 @@
 
     <script>
         $(document).ready(function() {
+            // Cargar la lista de usuarios
             function loadUsers() {
                 $.ajax({
                     url: "{{ route('usuarios') }}",
@@ -185,7 +188,7 @@
                     success: function(data) {
                         let tbody = $('#user-table-body'); // Cuerpo de la tabla de usuarios
                         let isAdmin =
-                        {{ auth()->user()->is_admin ? 'true' : 'false' }}; // Comprueba si el usuario es admin
+                            {{ auth()->user()->is_admin ? 'true' : 'false' }}; // Comprueba si el usuario es admin
                         tbody.empty(); // Limpiar cuerpo de la tabla de usuarios
 
                         data.forEach(function(user) {
@@ -212,22 +215,23 @@
 
                             // Fila de la tabla
                             let row = `
-                        <tr>
-                            <td>${user.id}</td>
-                            <td>${user.name}</td>
-                            <td>${user.email}</td>
-                            <td>${new Date(user.created_at).toLocaleDateString('es-ES')}</td>
-                            <td>${selectRole}</td>
-                            <td>
-                                ${editButton} 
-                                ${deleteButton}
-                            </td>
-                        </tr>
-                    `;
-
+                                    <tr>
+                                        <td>${user.id}</td>
+                                        <td>${user.name}</td>
+                                        <td>${user.email}</td>
+                                        <td>${new Date(user.created_at).toLocaleDateString('es-ES')}</td>
+                                        <td>${selectRole}</td>
+                                        <td>
+                                            ${editButton} 
+                                            ${deleteButton}
+                                        </td>
+                                    </tr>
+                                `;
                             //  Agregar la fila a la tabla
                             tbody.append(row);
                         });
+
+                        
 
                         // Manejo de la acción de editar
                         $('.edit-user').click(function() {
@@ -297,11 +301,12 @@
                 });
             }
 
+
             loadUsers(); // Cargar los usuarios al iniciar
+
 
             // Manejo de cambio en el selector de rol
             $(document).on('change', '.role-select', function() {
-
                 if ($(this).prop('disabled')) {
                     return;
                 }
@@ -310,7 +315,7 @@
                 let newRole = $(this).val(); // 0 para Usuario, 1 para Administrador
 
                 $.ajax({
-                    url: `{{ route('actualizarRol') }}`,
+                    url: `{{ route('actualizarRol') }}`, // Ruta para actualizar el rol
                     method: 'POST',
                     data: {
                         user_id: userId,

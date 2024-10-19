@@ -43,13 +43,14 @@ class TareasController extends Controller
     public function obtenerTareasId($id)
     {
        // dd($id);
-      $tareas = Task::with('project') // Eager loading para obtener el proyecto relacionado
+      $tareas = Task::with('project') // Consulta para obtener proyecto relacionado filtrando por id de usuario
             ->select("id", "task_description", "project_id", "start", "end")
             ->where('user_id', $id)
             ->get();
 
         $datos = array();
 
+        // Recorrer las tareas y obtener los datos necesarios
         foreach ($tareas as $t) {
             $datos[] = array(
                 "id" => $t["id"],
@@ -67,6 +68,8 @@ class TareasController extends Controller
     public function crearTarea(Request $request)
     {
          // dd($request);
+
+         // Validar los datos
         $request->validate([
             'descripcion' => 'required',
             'proyecto_id' => 'required',

@@ -20,6 +20,7 @@ class InformeController extends Controller
         $this->middleware('auth');
     }
 
+    // Obtener los datos necesarios para generar informe pdf  
     public function informePDF(Request $request)
     {
          // dd($request);

@@ -16,7 +16,7 @@ class CreateTasksTable extends Migration
             $table->string('task_description'); 
             $table->unsignedBigInteger('project_id'); 
 
-         
+          // Añade las claves foráneas
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade'); 
 

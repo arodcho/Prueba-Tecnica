@@ -21,15 +21,30 @@ class Project extends Model
         'user_id',
 
     ];
-    // Relación con el modelo User (Uno a Uno)
+    
+     /**
+     * Relación con el modelo User (Uno a Uno).
+     *
+     * Esta relación indica que cada instancia de este modelo está asociada
+     * a un único usuario en la base de datos. Por lo tanto, se puede acceder
+     * a los datos del usuario a través de esta relación.
+     *
+     */
     public function user()
     {
         return $this->hasOne(User::class);
     }
-    
-    // Relación con el modelo Task (Uno a Muchos)
+
+    /**
+     * Relación con el modelo Task (Uno a Muchos).
+     *
+     * Esta relación indica que cada instancia de este modelo puede estar
+     * asociada a múltiples tareas en la base de datos. Se puede acceder a
+     * todas las tareas relacionadas a través de esta relación.
+     *
+     */
     public function tasks()
     {
-        return $this->hasMany(Task::class); 
+        return $this->hasMany(Task::class);
     }
 }

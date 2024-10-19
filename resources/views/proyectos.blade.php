@@ -11,11 +11,30 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@6.1.15/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.15/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.15/index.global.min.js'></script>
 
 @stop
 
 <!-- CONTENT -->
 @section('content')
+ {{-- Mensaje de éxito al crear o actualizar un usuario --}}
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Éxito',
+        text: '{{ session('success') }}',
+    });
+</script>
+@endif
+
+        {{-- Contenido --}}
     <div class="d-flex flex-column flex-lg-row">
         <div class="w-100 w-lg-50 mt-3 p-3 rounded shadow-md border-0 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -42,11 +61,17 @@
                     </button>
                 </div>
             </div>
+
+
+            {{-- Contenedor de proyectos --}}
             <div class="mt-3 p-3 rounded shadow-sm" id="projects-container" style="background-color: #f8f9fa;">
                 <!-- Insercción de proyectos dinámicamente -->
             </div>
         </div>
-        <div id="calendar" class="w-100 w-lg-50 bg-white m-3 p-2 mt-3"></div>
+            
+            {{-- Calendario --}}
+            <div id="calendar" class="w-100 w-lg-50 bg-white m-3 p-2 mt-3"></div>
+        
     </div>
 
     <!-- Modal Crear Proyecto -->
@@ -133,7 +158,7 @@
         </div>
     </div>
 
-    <!-- Modal Generar Informe -->
+    <!-- Modal Agregar Tarea a Calendario -->
     <div class="modal fade" id="eventModal" class="eventModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -182,16 +207,6 @@
             </div>
         </div>
     </div>
-
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: '{{ session('success') }}',
-            });
-        </script>
-    @endif
 @stop
 
 <!-- FOOTER -->
@@ -217,7 +232,6 @@
 
 <!-- CSS -->
 @section('css')
-
     <style>
         .fc .fc-toolbar-title {
             font-size: 1rem;
@@ -233,15 +247,6 @@
 
 <!-- JS -->
 @section('js')
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.15/index.global.min.js'></script>
-
     <script>
         $(document).ready(function() {
             // Cargar proyectos
@@ -259,6 +264,7 @@
                         // Ordenar por fecha de creación
                         data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
+                        // Recorrer los proyectos y crear las tarjetas
                         data.forEach(function(project) {
                             let card = `
                         <div class="card project-card fc-event" data-id="${project.id}" 
@@ -273,7 +279,7 @@
                                 </div>
                             </div>
                         </div>`;
-                            container.append(card);
+                            container.append(card); // Agregar la tarjeta al contenedor
                         });
 
                         // Hacer las tarjetas arrastrables
@@ -290,53 +296,52 @@
                                 // $('#eventModal').modal('show'); // Mostrar el modal
                                 $('#buttonEvent').click();
                             }
-
                         });
                     }
-                },
-
-                error: function() {
+                }, error: function() { // Manejo de errores
                     alert('Hubo un error al recuperar los datos.');
                 }
             });
 
+// ----------------------------------------------------------------------------------------------------------------------------------------
+
             // Inicializar el calendario
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                headerToolbar: {
+                headerToolbar: { // Header del calendario
                     left: 'prev,dayGridMonth,next,today',
                     center: 'title',
                     right: 'timeGridWeek,timeGridDay'
                 },
-                buttonText: {
+                buttonText: { // Texto de los botones
                     today: "Hoy",
                     timeGridWeek: "Semana",
                     timeGridDay: "Día",
                     dayGridMonth: " "
                 },
-                slotLabelFormat: {
+                slotLabelFormat: { // Formato de la hora
                     hour: 'numeric',
                     minute: '2-digit',
                     omitZeroMinute: false,
                     meridiem: 'short'
                 },
-                slotLabelInterval: {
+                slotLabelInterval: { // Intervalo de la hora
                     minutes: 30
                 },
-                customButtons: {
+                customButtons: { // Selector de usuario
                     userSelect: {
-                        text: ' ', // Necesario para mostrar espacio
+                        text: ' ', // No necesita texto
                         click: function() {} // No necesita acción
                     }
                 },
-                initialView: 'timeGridDay',
-                locale: 'es',
-                scrollTime: '08:00:00',
-                allDaySlot: false,
-                editable: true,
-                selectable: true,
+                initialView: 'timeGridDay', // Vista inicial
+                locale: 'es',  // Idioma
+                scrollTime: '08:00:00', // Hora de inicio
+                allDaySlot: false, // No mostrar eventos de todo el día
+                editable: true, // Permitir editar eventos
+                selectable: true, // Permitir seleccionar eventos
                 droppable: true, // Permitir soltar eventos en el calendario
-                nowIndicator: true,
+                nowIndicator: true, // Indicador de hora actual
                 now: new Date(), // Hora y fecha actuales
                 events: function(fetchInfo, successCallback, failureCallback) {
                     let userId = $('#usuario').val();
@@ -353,7 +358,7 @@
                         }
                     });
                 },
-                // Evento al soltar un proyecto
+                // Evento al soltar un proyecto (Error con el constructor Draggable, no permite utilizar evento)
                 // drop: function(info) {
                 //     console.log('Dropeado');
                 // }
@@ -378,19 +383,19 @@
             const toolbarLeft = document.querySelector('.fc-toolbar-chunk:first-child');
             toolbarLeft.prepend(userSelect);
 
-
             // Añadir ícono de calendario al botón del mes
             const monthButton = document.querySelector('.fc-dayGridMonth-button');
             if (monthButton) {
                 monthButton.innerHTML = '<i class="fas fa-calendar"></i>';
             }
 
+// ----------------------------------------------------------------------------------------------------------------------------------------
 
             // AJAX para cargar los eventos
 
             // Cargar proyectos en el modal de informe
             $.ajax({
-                url: "{{ route('api.proyectos') }}",
+                url: "{{ route('api.proyectos') }}", // Consultar api de proyectos
                 method: "GET",
                 success: function(data) {
                     let proyectoSelect = $('#proyecto');
@@ -404,9 +409,9 @@
                 }
             });
 
-            // Cargar usuarios en el modal de informe
+            // Cargar usuarios en el selector de usuarios del calendario
             $.ajax({
-                url: "{{ route('api.usuarios') }}",
+                url: "{{ route('api.usuarios') }}", // Consultar api de usuarios
                 method: "GET",
                 success: function(data) {
                     let usuarioSelect = $('#usuario');
@@ -423,7 +428,7 @@
 
         // Cargar usuarios en el modal de informe
         $.ajax({
-            url: "{{ route('api.usuarios') }}",
+            url: "{{ route('api.usuarios') }}", // Consultar api de usuarios
             method: "GET",
             success: function(data) {
                 let usuarioSelect = $('#usuario2');
@@ -432,7 +437,7 @@
                         `<option value="${usuario.id}">${usuario.name}</option>`);
                 });
             },
-            error: function() {
+            error: function() { // Manejo de errores
                 alert('Error al cargar los usuarios.');
             }
         });

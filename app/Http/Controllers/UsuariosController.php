@@ -33,23 +33,14 @@ class UsuariosController extends Controller
         return view('usuarios');
     }
 
-    /**
-     * Get all users.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
+    // Obtener todos los usuarios
     public function obtenerUsuarios()
     {
         $usuarios = User::all();
         return response()->json($usuarios);
     }
 
-    /**
-     * Update user role.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
+    //Actualizar rol del usuario 
     public function actualizarRol(Request $request)
     {
         $request->validate([
@@ -74,12 +65,7 @@ class UsuariosController extends Controller
         return response()->json(['success' => false], 404);
     }
 
-    /**
-     * Create a new user.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    // Crear un nuevo usuario 
     public function crearUsuario(Request $request)
     {
         // dd($request);
@@ -99,12 +85,9 @@ class UsuariosController extends Controller
         return redirect()->back()->with('success', 'Usuario creado exitosamente.');
     }
 
-    /**
-     * Delete a user.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
+    
+     // Eliminar un usuario mediante id.
+   
     public function eliminarUsuario($id)
     {
         // dd($request);
@@ -116,13 +99,7 @@ class UsuariosController extends Controller
         return response()->json(['success' => false], 404);
     }
 
-    /**
-     * Update user information.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\JsonResponse
-     */
+    // Actualizar un usuario mediante id.
     public function actualizarUsuario(Request $request, $id)
     {
         // dd($request);

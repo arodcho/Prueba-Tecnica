@@ -33,6 +33,7 @@
 <!-- CONTENT -->
 @section('content')
     <div class="row">
+        {{-- Card de total de usuarios --}}
         <div class="col-lg-4 col-12">
             <div class="card bg-secondary text-white">
                 <div class="card-header d-flex align-items-center">
@@ -50,6 +51,7 @@
                 </div>
             </div>
         </div>
+         {{-- Card de total de proyectos --}}
         <div class="col-lg-4 col-12">
             <div class="card bg-warning text-dark">
                 <div class="card-header d-flex align-items-center">
@@ -67,6 +69,7 @@
                 </div>
             </div>
         </div>
+         {{-- Card de total de tareas--}}
         <div class="col-lg-4 col-12">
             <div class="card bg-info text-white">
                 <div class="card-header d-flex align-items-center">
@@ -86,7 +89,7 @@
         </div>
     </div>
 
-
+ {{-- Card de información de empresa --}}
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Información de la Empresa</h3>
@@ -102,6 +105,7 @@
     </div>
 
     <div class="row mt-4">
+        {{-- Enlace a la vista de usuarios --}}
         <div class="col-lg-6 col-12">
             <a href="usuarios" class="card text-white text-decoration-none" style="background-color: #001c56;">
                 <div class="card-header d-flex align-items-center">
@@ -118,6 +122,7 @@
                 </div>
             </a>
         </div>
+        {{-- Enlace a la vista de proyectos y tareas --}}
         <div class="col-lg-6 col-12">
             <a href="proyectos" class="card text-white text-decoration-none" style="background-color: #001c56;">
                 <div class="card-header d-flex align-items-center">

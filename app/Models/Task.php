@@ -20,15 +20,29 @@ class Task extends Model
         'project_id',
     ];
 
-        // Relación con el modelo Project (Uno a Muchos)
+    /**
+     * Relación con el modelo Project (Uno a Muchos).
+     *
+     * Esta relación indica que cada instancia de este modelo pertenece a un
+     * único proyecto en la base de datos. Esto significa que se puede acceder
+     * a los datos del proyecto asociado a través de esta relación.
+     *
+     */
     public function project()
     {
         return $this->belongsTo(Project::class); 
     }
 
-    // Relación con el modelo User (Uno a Uno)
-public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    /**
+     * Relación con el modelo User (Uno a Uno).
+     *
+     * Esta relación indica que cada instancia de este modelo pertenece a un
+     * único usuario en la base de datos. Se puede acceder a los datos del
+     * usuario asociado a través de esta relación.
+     *
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

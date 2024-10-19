@@ -5,21 +5,25 @@
 
 El proyecto se ha realizado en el IDE de Visual Studio Code, utilizando Wampserver con Apache 2.4.59, PHP 8.2.18 y PhpMyAdmin 5.2.1.
 
-Para el proyecto se ha utilizado el framework de Laravel así como MySQL para la base de datos y para la interfaz del proyecto se ha hecho uso de la plantilla de AdminLTE, además de Bootstrap y CSS (otra opción que tendríamos sería utilizar Sass y Tailwind para organizar los estilos en variables y funciones).
+Para el proyecto se ha utilizado el framework de Laravel así como MySQL para la base de datos y para la interfaz del proyecto se ha hecho uso de la plantilla de AdminLTE, además de Bootstrap y CSS. Otra opción sería utilizar Sass y Tailwind para organizar los estilos en variables y funciones.
+
+### Instalación de Dependencias
 
 Para cargar las dependencias de Node.js y PHP, utilice los siguientes comandos:
 
-Este comando instalará todos los paquetes listados en el archivo `package.json` y creará la carpeta `node_modules`.
+#### Node.js
 ```sh
 npm install
 ```
----
+Este comando instalará todos los paquetes listados en el archivo `package.json` y creará la carpeta `node_modules`.
 
-Este comando instalará todas las dependencias de PHP listadas en el archivo `composer.json` y creará la carpeta `vendor`.
+#### PHP
 ```sh
 composer install
 ```
----
+Este comando instalará todas las dependencias de PHP listadas en el archivo `composer.json` y creará la carpeta `vendor`.
+
+### Ejecución del Proyecto
 
 Para ejecutar el proyecto en local utilice el comando:
 ```sh
@@ -27,13 +31,12 @@ npm run dev
 ```
 Este comando actualizará todos los cambios realizados en código para que se vean reflejados en la aplicación.
 
----
+Para compilar el código fuente del proyecto en un formato que pueda ser desplegado en producción, utilice:
 ```sh
 npm run build
 ```
-Este comando compilará el código fuente del proyecto en un formato que pueda ser desplegado en producción.
 
----
+### Migración de la Base de Datos
 
 Para la migración de la base de datos, utilice el comando:
 ```sh
@@ -41,11 +44,22 @@ php artisan migrate
 ```
 Este comando ejecutará todas las migraciones pendientes, creando las tablas necesarias en la base de datos según las definiciones en los archivos de migración.
 
----
+Para cargar las tablas y datos predeterminados creados en las factories y seeders, utilice:
 ```sh
 php artisan migrate:refresh --seed
 ```
-Este comando cargará las tablas y datos predeterminados creados en las factories y seeders.
+
+## Imágenes
+
+### Imágenes Relevantes del Proyecto
+
+A continuación, se presentan algunas imágenes que ilustran las diferentes interfaces del proyecto:
+
+![Interfaz de inicio](/public/img/Inicio.png)
+
+![Interfaz de proyectos y calendario de tareas](/public/img/Proyectos.png)
+
+![Interfaz de usuarios](/public/img/Usuarios.png)
 
 ---
 
@@ -94,20 +108,6 @@ Desarrollo de un sistema de control de tareas de proyectos basado en los siguien
 
 - Finalización de la prueba y presentación de la documentación.
 
----
 
-## Imágenes
-
-### Imágenes Relevantes del Proyecto
-
-A continuación, se presentan algunas imágenes que ilustran las diferentes interfaces del proyecto:
-
-![Interfaz de inicio](/public/img/Inicio.png)
-
-![Interfaz de proyectos y calendario de tareas](/public/img/Proyectos.png)
-
-![Interfaz de usuarios](/public/img/Usuarios.png)
-
----
 
 
