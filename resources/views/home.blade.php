@@ -4,20 +4,22 @@
     Extiende la plantilla de 'adminlte::page' y define varias secciones:
     - title: Título de la página.
     - content_header: Encabezado del contenido con el título "Dashboard".
-    - content: Contenido principal que incluye tarjetas con información sobre el total de usuarios y proyectos, 
+    - content: Contenido principal que incluye tarjetas con información sobre el total de usuarios, proyectos y tareas, 
       así como información de la empresa.
     - footer: Pie de página fijo con información de derechos de autor, versión y desarrollador.
     - css: Sección para incluir estilos CSS adicionales (actualmente vacía).
     - js: Sección para incluir scripts JavaScript adicionales. 
-      Incluye scripts para cargar datos de usuarios y proyectos mediante AJAX y actualizar el contenido de la página.
+      Incluye scripts para cargar datos de usuarios, proyectos y tareas mediante AJAX y actualizar el contenido de la página.
 
     El contenido principal incluye:
-    - Dos tarjetas que muestran el número total de usuarios y proyectos.
+    - Tres tarjetas que muestran el número total de usuarios, proyectos y tareas.
     - Una tarjeta con información de la empresa.
+    - Dos enlaces a las vistas de usuarios y proyectos/tareas.
 
-    Los scripts JavaScript realizan peticiones AJAX a las rutas 'api.proyectos' y 'api.usuarios' para obtener 
+    Los scripts JavaScript realizan peticiones AJAX a las rutas 'api.proyectos', 'api.usuarios' y 'api.tareas' para obtener 
     los datos y actualizar los elementos correspondientes en la página.
 --}}
+
 @extends('adminlte::page')
 
 <!-- TITULO -->

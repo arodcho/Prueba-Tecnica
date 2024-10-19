@@ -29,14 +29,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
-
     // Relación con el modelo Task (Muchos a Muchos)
     public function tasks()
     {
-        return $this->belongsToMany(Task::class); 
+        return $this->hasMany(Task::class);
     }
-
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *

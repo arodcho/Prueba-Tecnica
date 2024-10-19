@@ -113,8 +113,8 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="usuario" class="form-label">Usuario</label>
-                            <select name="usuario" id="usuario" class="form-control">
+                            <label for="usuario2" class="form-label">Usuario</label>
+                            <select name="usuario" id="usuario2" class="form-control">
                                 <option value="">Seleccione un usuario</option>
                             </select>
                         </div>
@@ -420,5 +420,22 @@
                 }
             });
         });
+
+          // Cargar usuarios en el modal de informe
+          $.ajax({
+                url: "{{ route('api.usuarios') }}",
+                method: "GET",
+                success: function(data) {
+                    let usuarioSelect = $('#usuario2');
+                    data.forEach(function(usuario) {
+                        usuarioSelect.append(
+                            `<option value="${usuario.id}">${usuario.name}</option>`);
+                    });
+                },
+                error: function() {
+                    alert('Error al cargar los usuarios.');
+                }
+            });
+        
     </script>
 @stop

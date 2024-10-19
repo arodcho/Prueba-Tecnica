@@ -18,6 +18,7 @@
             min-height: 100vh;
             background-color: #fff;
         }
+
         .header img {
             max-width: 150px;
         }
@@ -49,7 +50,6 @@
             flex: 1;
             padding: 20px;
         }
-        
     </style>
 </head>
 
@@ -58,15 +58,15 @@
     <div class="header row" style="border: 3px solid #ddd; padding: 10px; margin: 20px; display: flex;">
 
         <!-- LOGO DE LA EMPRESA -->
-        <div class="logo col-md-6">
+        <div class="logo col-md-6" style="text-align: center;">
             <img src="{{ public_path('img/AdminLTELogo.png') }}" alt="Logo" style="max-width: 100%; height: auto;">
         </div>
 
         <!-- INFORMACIÓN DE LA EMPRESA Y FILTROS -->
-        <div class="company-info col-md-6">
+        <div class="company-info col-md-6" style="text-align: center;">
 
             <!-- Título del Informe -->
-            <h1 style="text-align: left; margin-bottom: 15px; color: #001c56;">Prueba Técnica</h1>
+            <h1 style="text-align: center; margin-bottom: 15px; color: #001c56;">Prueba Técnica</h1>
 
             <!-- Tabla de Parámetros (fechas, proyecto y usuario) -->
             <div style="padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
@@ -160,7 +160,8 @@
                         @empty
                             <!-- Mensaje si no hay tareas en el proyecto -->
                             <tr>
-                                <td colspan="6" style="text-align: center;">No hay tareas para este proyecto.</td>
+                                <td colspan="6" style="text-align: center;">No hay tareas para este proyecto con los
+                                    parametros proporcionados.</td>
                             </tr>
                         @endforelse
 
@@ -177,7 +178,7 @@
             </div>
         @empty
             <!-- Mensaje si no hay proyectos disponibles -->
-            <p>No hay proyectos disponibles.</p>
+            <p style="text-align: center; margin-top: 1rem">No hay proyectos con los parámetros proporcionados</p>
         @endforelse
     </div>
 
