@@ -19,10 +19,13 @@ Route::get('/proyectos', [App\Http\Controllers\ProyectosController::class, 'inde
 Route::post('proyectos/store', [App\Http\Controllers\ProyectosController::class, 'store'])->name('store');
 Route::get('/api/proyectos', [App\Http\Controllers\ProyectosController::class, 'obtenerProyectos'])->name('api.proyectos');
 
+// Ruta Informes
+Route::post('proyectos/pdf', [App\Http\Controllers\InformeController::class, 'informePDF'])->name('pdf');
+
 // Rutas Usuarios 
 Route::get('/usuarios', [App\Http\Controllers\UsuariosController::class, 'index'])->name('usuarios');
 Route::get('/api/usuarios', [App\Http\Controllers\UsuariosController::class, 'obtenerUsuarios'])->name('api.usuarios');
-Route::post('/update-user-role', [App\Http\Controllers\UsuariosController::class, 'updateRole'])->name('updateUserRole');
+Route::post('/actualizarRol', [App\Http\Controllers\UsuariosController::class, 'actualizarRol'])->name('actualizarRol');
 Route::post('usuarios/crear', [App\Http\Controllers\UsuariosController::class, 'crearUsuario'])->name('crearUsuario');
 Route::delete('usuarios/{id}/eliminar', [App\Http\Controllers\UsuariosController::class, 'eliminarUsuario'])->name('eliminarUsuario');
 Route::post('usuarios/{id}/actualizar', [App\Http\Controllers\UsuariosController::class, 'actualizarUsuario'])->name('actualizarUsuario');
@@ -33,4 +36,3 @@ Route::get('/tareas/{id}', [App\Http\Controllers\TareasController::class, 'obten
 Route::post('creartarea', [App\Http\Controllers\TareasController::class, 'crearTarea'])->name('crearTarea');
 Route::get('/api/tareas', [App\Http\Controllers\TareasController::class, 'obtenerTotalTareasRealizadas'])->name('api.tareas');
 
-Route::post('proyectos/pdf', [App\Http\Controllers\InformeController::class, 'informePDF'])->name('pdf');

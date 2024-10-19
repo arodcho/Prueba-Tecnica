@@ -1,7 +1,3 @@
-{{-- 
-    Vista de usuarios en Laravel utilizando Blade y AdminLTE.
---}}
-
 @extends('adminlte::page')
 
 <!-- TITULO -->
@@ -20,6 +16,18 @@
 
 <!-- CONTENT -->
 @section('content')
+    {{-- Mensaje de éxito al crear o actualizar un usuario --}}
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+
+
     <div class="mb-3">
         <!-- Botón para abrir el modal de creación de usuario -->
         @if (auth()->user()->is_admin)
@@ -73,7 +81,7 @@
                         </div>
                         <div class="text-center mt-2">
                             <button type="submit" class="btn btn-primary p-2">Crear</button>
-                           
+
                         </div>
                     </form>
                 </div>
@@ -125,20 +133,11 @@
                 </tr>
             </thead>
             <tbody id="user-table-body">
-                <!-- Inserccion de las filas de usuarios dinámicamente -->
+                <!-- Inserción de las filas de usuarios dinámicamente -->
             </tbody>
         </table>
     </div>
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: '{{ session('success') }}',
-            });
-        </script>
-    @endif
 @stop
 
 <!-- FOOTER -->
@@ -165,11 +164,11 @@
 
 <!-- CSS -->
 @section('css')
-<style>
-      footer {
-    margin-top: 6rem;
-}
-</style>
+    <style>
+        footer {
+            margin-top: 6rem;
+        }
+    </style>
 
 @stop
 
@@ -184,18 +183,26 @@
                     method: "GET",
                     dataType: "json",
                     success: function(data) {
-                        let tbody = $('#user-table-body');
-                        let isAdmin = {{ auth()->user()->is_admin ? 'true' : 'false' }};
-                        tbody.empty();
+                        let tbody = $('#user-table-body'); // Cuerpo de la tabla de usuarios
+                        let isAdmin =
+                        {{ auth()->user()->is_admin ? 'true' : 'false' }}; // Comprueba si el usuario es admin
+                        tbody.empty(); // Limpiar cuerpo de la tabla de usuarios
 
                         data.forEach(function(user) {
                             let role = user.is_admin ? 'Administrador' : 'Usuario';
+
+                            // Deshabilitar el selector si no es admin o si el usuario está cambiando su propio rol
+                            let isSelf = (user.id === {{ auth()->user()->id }});
+                            let disabled = isAdmin && !isSelf ? '' :
+                                'disabled'; // Solo admin puede cambiar roles, no puede cambiar su propio rol
+
+                            // Selector de rol
                             let selectRole = `
-                            <select class="form-control role-select" data-user-id="${user.id}" data-original-role="${user.is_admin}">
-                                <option value="0" ${user.is_admin ? '' : 'selected'}>Usuario</option>
-                                <option value="1" ${user.is_admin ? 'selected' : ''}>Administrador</option>
-                            </select>
-                        `;
+                    <select class="form-control role-select" data-user-id="${user.id}" data-original-role="${user.is_admin}" ${disabled}>
+                        <option value="0" ${user.is_admin ? '' : 'selected'}>Usuario</option>
+                        <option value="1" ${user.is_admin ? 'selected' : ''}>Administrador</option>
+                    </select>
+                `;
 
                             // Botones de editar y eliminar
                             let editButton =
@@ -203,21 +210,22 @@
                             let deleteButton =
                                 `<button class="btn btn-danger btn-sm delete-user" data-id="${user.id}" ${isAdmin ? '' : 'disabled'}><i class="fa fa-trash" aria-hidden="true"></i></button>`;
 
-
+                            // Fila de la tabla
                             let row = `
-                                <tr>
-                                    <td>${user.id}</td>
-                                    <td>${user.name}</td>
-                                    <td>${user.email}</td>
-                                    <td>${new Date(user.created_at).toLocaleDateString('es-ES')}</td>
-                                    <td>${selectRole}</td>
-                                    <td>
-                                        ${editButton} 
-                                        ${deleteButton}
-                                    </td>
-                                </tr>
-                            `;
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>${new Date(user.created_at).toLocaleDateString('es-ES')}</td>
+                            <td>${selectRole}</td>
+                            <td>
+                                ${editButton} 
+                                ${deleteButton}
+                            </td>
+                        </tr>
+                    `;
 
+                            //  Agregar la fila a la tabla
                             tbody.append(row);
                         });
 
@@ -252,7 +260,7 @@
                                 if (result.isConfirmed) {
                                     // Realizar la llamada AJAX para eliminar el usuario
                                     $.ajax({
-                                        url: `{{ url('usuarios/${userId}/eliminar') }}`,   
+                                        url: `{{ url('usuarios/${userId}/eliminar') }}`,
                                         method: "DELETE",
                                         data: {
                                             _token: '{{ csrf_token() }}' // Token CSRF
@@ -264,7 +272,7 @@
                                                 'success'
                                             );
                                             loadUsers
-                                        (); // Recargar la lista de usuarios
+                                                (); // Recargar la lista de usuarios
                                         },
                                         error: function() {
                                             Swal.fire(
@@ -278,7 +286,6 @@
                             });
                         });
 
-                      
                     },
                     error: function() {
                         Swal.fire({
@@ -292,15 +299,60 @@
 
             loadUsers(); // Cargar los usuarios al iniciar
 
+            // Manejo de cambio en el selector de rol
+            $(document).on('change', '.role-select', function() {
+
+                if ($(this).prop('disabled')) {
+                    return;
+                }
+
+                let userId = $(this).data('user-id');
+                let newRole = $(this).val(); // 0 para Usuario, 1 para Administrador
+
+                $.ajax({
+                    url: `{{ route('actualizarRol') }}`,
+                    method: 'POST',
+                    data: {
+                        user_id: userId,
+                        is_admin: newRole, // Asegúrate de que sea booleano (0 o 1)
+                        _token: '{{ csrf_token() }}' // Añadir token CSRF
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Rol actualizado',
+                            text: 'El rol del usuario ha sido actualizado exitosamente.',
+                        });
+                        loadUsers(); // Recargar la lista de usuarios
+                    },
+                    error: function(xhr) {
+                        let errors = xhr.responseJSON.errors;
+                        let errorMessage = '';
+                        if (errors) {
+                            $.each(errors, function(key, value) {
+                                errorMessage += value[0] + '\n';
+                            });
+                        }
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: errorMessage ||
+                                'Hubo un error al actualizar el rol del usuario.',
+                        });
+                    }
+                });
+            });
+
             // Manejo del formulario de edición de usuario
             $('#editUserForm').submit(function(event) {
                 event.preventDefault(); // Prevenir el envío del formulario por defecto
                 let userId = $('#editUserId').val();
 
+                // Realizar la llamada AJAX para actualizar el usuario
                 $.ajax({
-                    url: `{{ url('usuarios/${userId}/actualizar') }}`, 
+                    url: `{{ url('usuarios/${userId}/actualizar') }}`,
                     method: "POST",
-                    data: $(this).serialize() + `&_token={{ csrf_token() }}`, // Añadir token CSRF
+                    data: $(this).serialize() + `&_token={{ csrf_token() }}`,
                     success: function(response) {
                         if (response.success) {
                             Swal.fire({
@@ -331,6 +383,4 @@
             });
         });
     </script>
-
-
 @stop

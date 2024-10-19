@@ -56,7 +56,7 @@ class ProyectosController extends Controller
         return redirect()->back()->with('success', 'Proyecto creado correctamente.');
     }
 
-   
+
 
     // Obtener todos los proyectos
     public function obtenerProyectos()

@@ -341,7 +341,7 @@
                 events: function(fetchInfo, successCallback, failureCallback) {
                     let userId = $('#usuario').val();
                     let url = userId ? '/tareas/' + userId :
-                    '/tareas'; // Ruta para cargar eventos con o sin ID del proyecto
+                        '/tareas'; // Ruta para cargar eventos con o sin ID del proyecto
                     $.ajax({
                         url: url,
                         method: 'GET',
@@ -421,21 +421,20 @@
             });
         });
 
-          // Cargar usuarios en el modal de informe
-          $.ajax({
-                url: "{{ route('api.usuarios') }}",
-                method: "GET",
-                success: function(data) {
-                    let usuarioSelect = $('#usuario2');
-                    data.forEach(function(usuario) {
-                        usuarioSelect.append(
-                            `<option value="${usuario.id}">${usuario.name}</option>`);
-                    });
-                },
-                error: function() {
-                    alert('Error al cargar los usuarios.');
-                }
-            });
-        
+        // Cargar usuarios en el modal de informe
+        $.ajax({
+            url: "{{ route('api.usuarios') }}",
+            method: "GET",
+            success: function(data) {
+                let usuarioSelect = $('#usuario2');
+                data.forEach(function(usuario) {
+                    usuarioSelect.append(
+                        `<option value="${usuario.id}">${usuario.name}</option>`);
+                });
+            },
+            error: function() {
+                alert('Error al cargar los usuarios.');
+            }
+        });
     </script>
 @stop

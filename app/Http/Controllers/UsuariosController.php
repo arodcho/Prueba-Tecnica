@@ -50,17 +50,22 @@ class UsuariosController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updateRole(Request $request)
+    public function actualizarRol(Request $request)
     {
-        // dd($request);
         $request->validate([
             'user_id' => 'required|integer',
             'is_admin' => 'required|boolean',
         ]);
 
         $user = User::find($request->user_id);
+
+        // Verificar si el usuario autenticado está intentando cambiar su propio rol
+        if ($user->id === auth()->id()) {
+            return response()->json(['success' => false, 'message' => 'No puedes cambiar tu propio rol.'], 403);
+        }
+
         if ($user) {
-            $user->is_admin = $request->is_admin;
+            $user->is_admin = $request->is_admin; // Actualizar el rol
             $user->save();
 
             return response()->json(['success' => true]);

@@ -161,11 +161,11 @@
 
 <!-- CSS -->
 @section('css')
-<style>
-    footer {
-    margin-top: 6rem;
-}
-</style>
+    <style>
+        footer {
+            margin-top: 6rem;
+        }
+    </style>
 
 @stop
 
