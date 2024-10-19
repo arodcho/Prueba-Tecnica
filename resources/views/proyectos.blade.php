@@ -16,8 +16,8 @@
 
 <!-- CONTENT -->
 @section('content')
-    <div class="d-flex">
-        <div class="w-50 mt-3 p-3 rounded shadow-md border-0 bg-white">
+    <div class="d-flex flex-column flex-lg-row">
+        <div class="w-100 w-lg-50 mt-3 p-3 rounded shadow-md border-0 bg-white">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h3 class="mb-0">Listado</h3>
                 <div class="btn-group">
@@ -46,7 +46,7 @@
                 <!-- Insercción de proyectos dinámicamente -->
             </div>
         </div>
-        <div id="calendar" class="w-50 bg-white m-3 p-2 mt-3"></div>
+        <div id="calendar" class="w-100 w-lg-50 bg-white m-3 p-2 mt-3"></div>
     </div>
 
     <!-- Modal Crear Proyecto -->
@@ -193,18 +193,17 @@
 
 <!-- FOOTER -->
 @section('footer')
-    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top"
-        style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030; margin-left: 16rem;">
+    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top text-left"
+        style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030;">
         <div class="container">
             <div class="row text-center">
-
-                <div class="col-sm-4">
+                <div class="col-12 col-sm-4 mb-2 mb-sm-0">
                     <div>Versión 1.0.0.</div>
                 </div>
-                <div class="col-sm-4 mb-2 mb-sm-0">
+                <div class="col-12 col-sm-4 mb-2 mb-sm-0">
                     <strong>&copy; 2024 Prueba Técnica.</strong>
                 </div>
-                <div class="col-sm-4 mb-2 mb-sm-0">
+                <div class="col-12 col-sm-4 mb-2 mb-sm-0">
                     <div>Desarrollado por <b>Álvaro Rodríguez Chofles.</b></div>
                 </div>
             </div>
@@ -222,6 +221,9 @@
             font-weight: normal;
             padding: 0.25rem;
         }
+        footer {
+    margin-top: 6rem;
+}
     </style>
 @stop
 
@@ -298,7 +300,7 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 headerToolbar: {
-                    left: 'prev,next,today',
+                    left: 'prev,dayGridMonth,next,today',
                     center: 'title',
                     right: 'timeGridWeek,timeGridDay'
                 },
@@ -306,6 +308,7 @@
                     today: "Hoy",
                     timeGridWeek: "Semana",
                     timeGridDay: "Día",
+                    dayGridMonth: " "
                 },
                 slotLabelFormat: {
                     hour: 'numeric',
@@ -334,6 +337,12 @@
             });
 
             calendar.render();
+
+            // Añadir ícono de calendario al botón del mes
+                const monthButton = document.querySelector('.fc-dayGridMonth-button');
+                if (monthButton) {
+                    monthButton.innerHTML = '<i class="fas fa-calendar"></i>';
+                }
 
 
             // AJAX para cargar los eventos
