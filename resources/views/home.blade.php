@@ -30,6 +30,28 @@
     <h1>Inicio</h1>
 @stop
 
+<!-- CSS -->
+@section('css')
+    <style>
+         footer {
+            margin-top: 6rem;
+            position: fixed; bottom: 0; 
+            left: 0; 
+            right: 0;
+             z-index: 1030;
+        }
+
+        #cardUsuarios{
+            background-color: #001c56;
+        }
+
+        #cardProyectos{
+            background-color: #001c56;
+        }
+    </style>
+@stop
+
+
 <!-- CONTENT -->
 @section('content')
     <div class="row">
@@ -107,7 +129,7 @@
     <div class="row mt-4">
         {{-- Enlace a la vista de usuarios --}}
         <div class="col-lg-6 col-12">
-            <a href="usuarios" class="card text-white text-decoration-none" style="background-color: #001c56;">
+            <a href="usuarios" class="card text-white text-decoration-none" id="cardUsuarios">
                 <div class="card-header d-flex align-items-center">
                     <i class="fas fa-users fa-2x mr-2"></i>
                     <h3 class="card-title mb-0">Ver Usuarios</h3>
@@ -124,7 +146,7 @@
         </div>
         {{-- Enlace a la vista de proyectos y tareas --}}
         <div class="col-lg-6 col-12">
-            <a href="proyectos" class="card text-white text-decoration-none" style="background-color: #001c56;">
+            <a href="proyectos" class="card text-white text-decoration-none" id="cardProyectos">
                 <div class="card-header d-flex align-items-center">
                     <i class="fas fa-project-diagram fa-2x mr-2"></i>
                     <h3 class="card-title mb-0">Ver Proyectos y Tareas</h3>
@@ -145,8 +167,7 @@
 
 <!-- FOOTER -->
 @section('footer')
-    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top text-left"
-        style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030;">
+    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top text-left">
         <div class="container">
             <div class="row text-center">
                 <div class="col-12 col-sm-4 mb-2 mb-sm-0">
@@ -161,17 +182,6 @@
             </div>
         </div>
     </footer>
-@stop
-
-
-<!-- CSS -->
-@section('css')
-    <style>
-        footer {
-            margin-top: 6rem;
-        }
-    </style>
-
 @stop
 
 <!-- JS -->

@@ -10,16 +10,50 @@
     <!-- SweetAlert -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.15/index.global.min.js'></script>
-
 @stop
+
+<!-- CSS -->
+@section('css')
+    <style>
+        .fc .fc-toolbar-title {
+            font-size: 1rem;
+            font-weight: normal;
+            padding: 0.25rem;
+        }
+        footer {
+            margin-top: 6rem;
+            position: fixed; bottom: 0; 
+            left: 0; 
+            right: 0;
+             z-index: 1030;
+        }
+        #projects-container{
+            background-color: #f8f9fa;
+        }
+
+        #botonInforme{
+            background-color: #001c56; color: white; width: 50px; height: 50px;
+        }
+
+        #botonProyecto{
+            background-color: #001c56; color: white; width: 50px; height: 50px;
+        }
+        #botonEvento{
+            display: none;
+        }
+        #informacionFechaProyecto {
+              margin-left: auto;
+        }
+
+        .modal-header{
+            background-color: #001c56; 
+            color: white;
+        }
+      
+
+    </style>
+@stop
+
 
 <!-- CONTENT -->
 @section('content')
@@ -41,21 +75,18 @@
                 <h3 class="mb-0">Listado</h3>
                 <div class="btn-group">
                     {{-- Botón para crear proyecto --}}
-                    <button type="button" class="btn p-2 m-2 rounded"
-                        style="background-color: #001c56; color: white; width: 50px; height: 50px;" data-toggle="modal"
-                        data-target="#crearProyectoModal"
+                    <button type="button" class="btn p-2 m-2 rounded" id="botonProyecto" data-toggle="modal" data-target="#crearProyectoModal"
                         @if (!Auth::user()->is_admin) disabled title="Solo los administradores pueden crear proyectos." @endif>
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
 
-                    <button type="button" class="btn p-2 m-2 rounded"
-                        style="background-color: #001c56; color: white; width: 50px; height: 50px;" data-toggle="modal"
-                        data-target="#generarInformeModal">
+                    {{-- Boton para modal de generar informe --}}
+                    <button type="button" class="btn p-2 m-2 rounded" id="botonInforme" data-toggle="modal" data-target="#generarInformeModal">
                         <i class="fa fa-file" aria-hidden="true"></i>
                     </button>
 
-                    <button type="button" class="btn p-2 m-2 rounded" id="buttonEvent"
-                        style="background-color: #001c56; color: white; width: 50px; height: 50px; display: none;"
+                    {{-- Boton para modal de agregar tarea al calendario --}}
+                    <button type="button" class="btn p-2 m-2 rounded" id="botonEvento"
                         data-toggle="modal" data-target="#eventModal">
                         <i class="fa fa-file" aria-hidden="true"></i>
                     </button>
@@ -64,7 +95,7 @@
 
 
             {{-- Contenedor de proyectos --}}
-            <div class="mt-3 p-3 rounded shadow-sm" id="projects-container" style="background-color: #f8f9fa;">
+            <div class="mt-3 p-3 rounded shadow-sm" id="projects-container">
                 <!-- Insercción de proyectos dinámicamente -->
             </div>
         </div>
@@ -79,7 +110,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #001c56; color: white;">
+                <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Crear proyecto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
                         <span aria-hidden="true">&times;</span>
@@ -112,7 +143,7 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #001c56; color: white;">
+                <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Opciones del informe</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: white;">
                         <span aria-hidden="true">&times;</span>
@@ -163,7 +194,7 @@
         aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header" style="background-color: #001c56; color: white;">
+                <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Evento</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                         style="color: white;">
@@ -211,8 +242,7 @@
 
 <!-- FOOTER -->
 @section('footer')
-    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top text-left"
-        style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030;">
+    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top text-left">
         <div class="container">
             <div class="row text-center">
                 <div class="col-12 col-sm-4 mb-2 mb-sm-0">
@@ -230,23 +260,18 @@
 @stop
 
 
-<!-- CSS -->
-@section('css')
-    <style>
-        .fc .fc-toolbar-title {
-            font-size: 1rem;
-            font-weight: normal;
-            padding: 0.25rem;
-        }
-
-        footer {
-            margin-top: 6rem;
-        }
-    </style>
-@stop
 
 <!-- JS -->
 @section('js')
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.15/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/web-component@6.1.15/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.15/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.15/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@6.1.15/index.global.min.js'></script>
+
     <script>
         $(document).ready(function() {
             // Cargar proyectos
@@ -274,7 +299,7 @@
                                     <h5 class="card-title font-bold mb-2">${project.name}</h5>
                                     <p class="card-text text-muted">Creado por usuario ID: ${project.user_id}</p>
                                 </div>
-                                <div class="d-flex align-items-end" style="margin-left: auto;">
+                                <div class="d-flex align-items-end" id="informacionfechaCreacion">
                                     <small class="text-muted">${new Date(project.created_at).toLocaleDateString()}</small>
                                 </div>
                             </div>
@@ -294,7 +319,7 @@
                                 $('#projectId').val(projectData
                                     .id); // Guardar el ID del proyecto
                                 // $('#eventModal').modal('show'); // Mostrar el modal
-                                $('#buttonEvent').click();
+                                $('#botonEvento').click();
                             }
                         });
                     }

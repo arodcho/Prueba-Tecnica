@@ -11,8 +11,25 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- Jquery --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 @stop
+
+<!-- CSS -->
+@section('css')
+    <style>
+        footer {
+            margin-top: 6rem;
+            position: fixed; bottom: 0; 
+            left: 0; 
+            right: 0;
+             z-index: 1030;
+        }
+        #createUserButton{
+            background-color: #001c56; 
+            color: white;
+        }
+    </style>
+@stop
+
 
 <!-- CONTENT -->
 @section('content')
@@ -31,14 +48,12 @@
     <div class="mb-3">
         <!-- Botón para abrir el modal de creación de usuario -->
         @if (auth()->user()->is_admin)
-            <button type="button" class="btn p-2 rounded" title="Crear usuario"
-                style="background-color: #001c56; color: white;" data-toggle="modal" data-target="#createUserModal">
+            <button type="button" class="btn p-2 rounded" title="Crear usuario" id="createUserButton" data-toggle="modal" data-target="#createUserModal">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 <i class="fas fa-users fa-2x mr-2"></i>
             </button>
         @else
-            <button type="button" class="btn p-2 rounded"
-                style="background-color: #001c56; color: white;"data-toggle="modal"
+            <button type="button" class="btn p-2 rounded" id="createUserButton" data-toggle="modal"
                 title="Solo los administradores pueden crear usuarios." data-target="#createUserModal" disabled>
                 <i class="fa fa-plus"></i>
                 <i class="fas fa-users fa-2x mr-2"></i>
@@ -145,8 +160,7 @@
 
 <!-- FOOTER -->
 @section('footer')
-    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top text-left"
-        style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030;">
+    <footer class="w-100 bg-light text-black pt-3 mt-6 pb-3 border-top text-left">
         <div class="container">
             <div class="row text-center">
                 <div class="col-12 col-sm-4 mb-2 mb-sm-0">
@@ -164,15 +178,6 @@
 @stop
 
 
-<!-- CSS -->
-@section('css')
-    <style>
-        footer {
-            margin-top: 6rem;
-        }
-    </style>
-
-@stop
 
 <!-- JS -->
 @section('js')

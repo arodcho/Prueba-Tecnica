@@ -3,7 +3,7 @@
 
 ## Descripción del Proyecto
 
-El proyecto se ha realizado en el IDE de Visual Studio Code, utilizando Wampserver con Apache 2.4.59, PHP 8.2.18 y PhpMyAdmin 5.2.1.
+El proyecto se ha desarrollado utilizando Visual Studio Code como IDE. Además, se ha empleado Wampserver con Apache 2.4.59, PHP 8.2.18 y PhpMyAdmin 5.2.1 para la gestión del entorno de desarrollo y la base de datos.
 
 Para el proyecto se ha utilizado el framework de Laravel así como MySQL para la base de datos y para la interfaz del proyecto se ha hecho uso de la plantilla de AdminLTE, además de Bootstrap y CSS. Otra opción sería utilizar Sass y Tailwind para organizar los estilos en variables y funciones.
 
